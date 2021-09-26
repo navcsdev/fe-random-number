@@ -1,16 +1,10 @@
 <template>
   <va-list-item
-    v-for="{score, index} in leaderBoards?.data"
+    v-for="(score, index) in leaderBoards?.data"
     :key="score.id">
     <va-list-item-section>
       <va-list-item-label>
-        {{ index }}
-      </va-list-item-label>
-      <va-list-item-label>
-        {{ score.name }}
-      </va-list-item-label>
-      <va-list-item-label caption>
-        {{ score.created_at }}
+        {{ index + 1}} {{ score.name }} {{ score.created_at }}
       </va-list-item-label>
     </va-list-item-section>
 

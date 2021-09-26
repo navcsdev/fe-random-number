@@ -6,6 +6,11 @@
         <va-card>
           <va-card-title>Game Play</va-card-title>
           <va-card-content style="text-align: center">
+            <div class="row" v-if="state.created">
+              <div class="flex md12">
+                <p>Your name is used. Pls roll with another name</p>
+              </div>
+            </div>
             <div class="row">
               <div class="flex md12">
                 <div class="item" style="font-size: 40px">{{state.score}}</div>
@@ -27,7 +32,7 @@
       </div>
       <div class="flex xs6">
         <va-card>
-          <va-card-title>Leader Board</va-card-title>
+          <va-card-title>Leader Board Top 30</va-card-title>
           <va-card-content>
             <LeaderBoard ref="leaderBoard" />
           </va-card-content>
@@ -70,7 +75,8 @@ export default {
         }
       },
       score: '',
-      createdAt : ''
+      createdAt : '',
+      created: false
     })
     return {
       state,
@@ -86,6 +92,11 @@ export default {
         this.onSubmit()
         appService.play(this.state.model).then(res => {
           console.log(res)
+          if (res.status == 200) {
+            this.state.created = true
+          } else {
+            this.state.created = false
+          }
           this.state.score = res.data.data.score
           this.state.createdAt = res.data.data.created_at
           this.$refs.leaderBoard.paginationLoad()
